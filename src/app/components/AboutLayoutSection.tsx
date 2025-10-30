@@ -27,13 +27,13 @@ const AboutLayoutSection = () => {
                     <div className="relative w-full min-h-[400px] sm:min-h-[500px] lg:min-h-[600px] flex items-center justify-center lg:justify-end">
                         <div className="w-full h-full flex items-center justify-center scale-[0.6] sm:scale-75 lg:scale-90 xl:scale-100 origin-center lg:origin-right mr-52 lg:mr-16">
                             <CardSwap
-                                width={400}
-                                height={500}
-                                cardDistance={80}
-                                verticalDistance={80}
-                                delay={2000}
-                                pauseOnHover={true}
-                            >
+                            width={400}
+                            height={500}
+                            cardDistance={80}
+                            verticalDistance={80}
+                            delay={2000}
+                            pauseOnHover={true}
+                            onCardClick={undefined}>
                                 <Card customClass="p-6">
                                     <h3 className="text-white text-xl font-bold mb-2">Card 1</h3>
                                     <p className="text-gray-400 mb-4">Your content here</p>
