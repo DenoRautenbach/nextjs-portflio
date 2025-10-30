@@ -3,7 +3,7 @@ import { HiArrowNarrowRight } from "react-icons/hi";
 
 const ContactLayout = () => {
     return (
-        <div className="container my-24 mx-auto md:px-6">
+        <div className="container my-24 mx-auto lg:p-24 p-6">
           <section className="mb-32 text-center">
             <div className="py-12 md:px-12">
               <div className="container mx-auto xl:px-32">
@@ -56,8 +56,9 @@ const ContactLayout = () => {
                   <div className="md:mb-12 lg:mb-0">
                     <div
                       className="relative h-[700px] rounded-lg shadow-lg dark:shadow-black/20">
-                        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d52984.299384621016!2d19.10660646712371!3d-33.90204711390486!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcdbd076805b2cf%3A0x3cb48654d356b2f9!2sFranschhoek%2C%207690!5e0!3m2!1sen!2sza!4v1711309186882!5m2!1sen!2sza" loading="lazy" 
-                        className="absolute left-0 top-12 h-full w-full rounded-lg border-0"
+                        <iframe className="absolute left-0 top-12 h-full w-full rounded-lg border-0" 
+                          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d847614.6226093159!2d18.6560594!3d-33.915538049999995!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1dcc500f8826eed7%3A0x687fe1fc2828aa87!2sCape%20Town!5e0!3m2!1sen!2sza!4v1761077766063!5m2!1sen!2sza" width="600" height="450" 
+                          loading="lazy" 
                         ></iframe>
                     </div>
                   </div>

@@ -20,6 +20,13 @@
   .text-balance {
     text-wrap: balance;
   }
+    .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
 }
 
 /* Home Page */
@@ -350,4 +357,42 @@ background-size: cover;
   body {
     @apply bg-background text-foreground;
   }
+}
+
+
+/* Slider */
+@import url('https://fonts.googleapis.com/css2?family=Sora&display=swap');
+
+@font-face {
+  font-family: "Bandeins Sans & Strange Variable";
+  src: url("https://res.cloudinary.com/dldmpwpcp/raw/upload/v1566406079/BandeinsStrangeVariable_esetvq.ttf");
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+::-webkit-scrollbar {
+  display: none;
+}
+
+figure {
+  margin: 0;
+  /* overflow: hidden; */
+}
+
+html,
+body {
+  /* overflow: hidden; */
+  margin: 0;
+  padding: 0;
+  height: 100vh;
+  height: -webkit-fill-available;
+}
+
+body {
+  color: #fff;
+  background: #4361ee;
+  font-family: "Sora", sans-serif;
 }

@@ -1,38 +1,28 @@
 'use client'
 import React from 'react';
-import PillNav from './components/Header';
-import logo from './assets/logo.png';
+import Navbar from './components/Navbar';
 import FooterSection from './components/Footer'
 import SinglePageSections from './components/SinglePageSections';
 // import ReactLogoAnimation from './components/ReactLogo'
 import LinksLayout from './components/Links';
+import HomeLayoutSection from './components/HomeLayoutSection';
+import Projectslayout from './components/ProjectsLayout';
 
 export default function Home() {
   return (
-    <div className="flex justify-center items-center bg-black ">
-        <PillNav
-          logo={logo}
-          logoAlt="Company Logo"
-          items={[
-            { label: 'Home', href: '/' },
-            { label: 'About', href: '#about' },
-            { label: 'Testimonials', href: '#testimonials' },
-            { label: 'Contact', href: '#contact' }
-          ]}
-          activeHref="/"
-          className="custom-nav"
-          ease="power2.easeOut"
-          baseColor="#000000"
-          pillColor="#ffffff"
-          hoveredPillTextColor="#ffffff"
-          pillTextColor="#000000"
-        />
+    <div className="flex justify-center items-center bg-black">
       <main className="relative">
+        {/* <Navbar /> */}
         {/* <LinksLayout /> */}
-        <SinglePageSections />
+        <HomeLayoutSection />
+        {/* <SinglePageSections /> */}
         {/* <ReactLogoAnimation /> */}
+            {/* <Projectslayout /> */}
+            {/* <Slider />
+            <AboutLayoutSection />
+            <TestimonialsLayout /> */}
       </main>
-        <FooterSection />
+        {/* <FooterSection /> */}
     </div>
   );
 }

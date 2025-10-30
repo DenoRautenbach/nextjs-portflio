@@ -59,7 +59,16 @@ module.exports = {
   				'4': 'hsl(var(--chart-4))',
   				'5': 'hsl(var(--chart-5))'
   			}
-  		}
+  		},
+		keyframes: {
+        shine: {
+          '0%': { 'background-position': '100%' },
+          '100%': { 'background-position': '-100%' },
+        },
+      },
+	    animation: {
+        shine: 'shine 10s linear infinite',
+      },
   	},
   	screens: {
   		sm: '412px',
@@ -83,3 +92,21 @@ module.exports = {
       require("tailwindcss-animate")
 ],
 };
+
+// tailwind.config.js
+// module.exports = {
+//   theme: {
+//     extend: {
+//       keyframes: {
+//         shine: {
+//           '0%': { 'background-position': '100%' },
+//           '100%': { 'background-position': '-100%' },
+//         },
+//       },
+//       animation: {
+//         shine: 'shine 5s linear infinite',
+//       },
+//     },
+//   },
+//   plugins: [],
+// };

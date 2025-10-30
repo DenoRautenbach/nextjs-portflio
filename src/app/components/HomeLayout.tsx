@@ -30,7 +30,7 @@ const Hyperspeed = ({
     carShiftX: [-0.8, 0.8],
     carFloorSeparation: [0, 5],
     colors: {
-      roadColor: 0x080808,
+      roadColor: 0x000000,
       islandColor: 0x0a0a0a,
       background: 0x000000,
       shoulderLines: 0xffffff,

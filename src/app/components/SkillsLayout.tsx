@@ -1,141 +1,47 @@
 'use client'
-// import React from "react";
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
-// import thorfinn from "../assets/thorfinn-removebg-preview.png"
-import nextjs from "../assets/nextjs.png"
-import nodejs from "../assets/nodejs.png"
-import typescript from "../assets/typescript.png"
-import reactjs from "../assets/reactjs.png"
-import tailwindcss from "../assets/tailwindcss.png"
-import python from "../assets/python.png"
-import vuejs from "../assets/vuejs.png"
-import mysql from "../assets/mysql.png"
-import wordpress from "../assets/wordpress.png"
-import github from "../assets/github.png"
+import LogoLoop from './LogoLoop';
 
-const SkillsLayout = () => {
-    const [hovered, setHovered] = useState(false);
+import reactjs from "../assets/reactjs.png";
+import nextjs from "../assets/nextjs.png";
+import typescript from "../assets/typescript.png";
+import tailwindcss from "../assets/tailwindcss.png";
+import nodejs from "../assets/nodejs.png";
+import vuejs from "../assets/vuejs.png";
+import python from "../assets/python.png";
+import wordpress from "../assets/wordpress.png";
+import mysql from "../assets/mysql.png";
+import github from "../assets/github.png";
 
-    return (
-        <div className="container relative grid lg:grid-cols-5 md:grid-cols-1 w-3/4 pb-60">
-            {/* 1st Set of images */}
-        <div
-          className="group relative"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
+// Prepare image pairs for hover effect
+const hoverLogos = [
+  { front: reactjs, back: wordpress, alt: "React / WordPress" },
+  { front: nextjs, back: nodejs, alt: "Next.js / Node.js" },
+  { front: typescript, back: vuejs, alt: "TypeScript / Vue.js" },
+  { front: tailwindcss, back: python, alt: "Tailwind / Python" },
+  { front: mysql, back: github, alt: "MySQL / GitHub" },
+];
+
+const SkillsLayout: React.FC = () => {
+  return (
+    <div className="container relative grid lg:grid-cols-5 md:grid-cols-1 w-3/4 pb-16 mx-auto gap-8">
+      {hoverLogos.map((logo, index) => (
+        <div key={index} className="group relative w-full h-48">
           <Image
-            className={`transition ease-in-out duration-1000 ${
-              hovered ? "opacity-0" : "opacity-100"
-            }`}
-            src={reactjs}
-            alt="1st image"
+            src={logo.front}
+            alt={logo.alt}
+            className="transition-opacity duration-700 ease-in-out opacity-100 group-hover:opacity-0 w-full h-full object-contain"
           />
           <Image
-            className={`mx-auto absolute top-0 left-0 transition ease-in-out duration-1000 ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
-            src={wordpress}
-            alt="2nd image"
-            width={400}
-            height={400}
-          />
-        </div>
-             {/* 2nd Set of images */}
-        <div
-          className="group relative"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <Image
-            className={`transition ease-in-out duration-1000 ${
-              hovered ? "opacity-0" : "opacity-100"
-            }`}
-            src={nextjs}
-            alt="3rd image"
-          />
-          <Image
-            className={`mx-auto absolute top-0 left-0 transition ease-in-out duration-1000 ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
-            src={nodejs}
-            alt="4th image"
-            width={400}
-            height={400}
+            src={logo.back}
+            alt={logo.alt}
+            className="absolute top-0 left-0 transition-opacity duration-700 ease-in-out opacity-0 group-hover:opacity-100 w-full h-full object-contain"
           />
         </div>
-            {/* 3rd Set of images */}
-        <div
-          className="group relative"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <Image
-            className={`transition ease-in-out duration-1000 ${
-              hovered ? "opacity-0" : "opacity-100"
-            }`}
-            src={typescript}
-            alt="5th image"
-          />
-          <Image
-            className={`mx-auto absolute top-0 left-0 transition ease-in-out duration-1000 ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
-            src={vuejs}
-            alt="6th image"
-            width={400}
-            height={400}
-          />
-        </div>
-            {/* 4th Set of images */}
-        <div
-          className="group relative"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <Image
-            className={`transition ease-in-out duration-1000 ${
-              hovered ? "opacity-0" : "opacity-100"
-            }`}
-            src={tailwindcss}
-            alt="7th image"
-          />
-          <Image
-            className={`mx-auto absolute top-0 left-0 transition ease-in-out duration-1000 ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
-            src={python}
-            alt="8th image"
-            width={400}
-            height={400}
-          />
-        </div>
-            {/* 5th Set of images */}
-        <div
-          className="group relative"
-          onMouseEnter={() => setHovered(true)}
-          onMouseLeave={() => setHovered(false)}
-        >
-          <Image
-            className={`transition ease-in-out duration-1000 ${
-              hovered ? "opacity-0" : "opacity-100"
-            }`}
-            src={mysql}
-            alt="9th image"
-          />
-          <Image
-            className={`mx-auto absolute top-0 left-0 transition ease-in-out duration-1000 ${
-              hovered ? "opacity-100" : "opacity-0"
-            }`}
-            src={github}
-            alt="10th image"
-            width={400}
-            height={400}
-          />
-        </div>
+      ))}
     </div>
-    );
-}
+  );
+};
 
-export default SkillsLayout
+export default SkillsLayout;
