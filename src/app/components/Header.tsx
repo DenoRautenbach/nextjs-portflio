@@ -186,14 +186,14 @@ const PillNav = ({
 
   const isRouterLink = href => href && !isExternalLink(href);
 
-  const cssVars = {
-    ['--base']: baseColor,
-    ['--pill-bg']: pillColor,
-    ['--hover-text']: hoveredPillTextColor,
-    ['--pill-text']: resolvedPillTextColor,
-    ['--nav-h']: '42px',
-    ['--pill-pad-x']: '18px',
-    ['--pill-gap']: '3px'
+  const cssVars: React.CSSProperties = {
+    ['--base' as any]: baseColor,
+    ['--pill-bg' as any]: pillColor,
+    ['--hover-text' as any]: hoveredPillTextColor,
+    ['--pill-text' as any]: resolvedPillTextColor,
+    ['--nav-h' as any]: '42px',
+    ['--pill-pad-x' as any]: '18px',
+    ['--pill-gap' as any]: '3px'
   };
 
   return (

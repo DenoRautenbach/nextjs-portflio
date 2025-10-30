@@ -339,6 +339,7 @@ const Hyperspeed = ({
       }
     };
 
+    // @ts-ignore
     class App {
       constructor(container, options = {}) {
         this.options = options;

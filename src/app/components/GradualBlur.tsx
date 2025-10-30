@@ -101,6 +101,11 @@ const useIntersectionObserver = (ref, shouldObserve = false) => {
   return isVisible;
 };
 
+// Utility to safely convert mathjs numbers
+function toNum(x: any) {
+  return (typeof x === "object" && x !== null && typeof x.toNumber === "function") ? x.toNumber() : x;
+}
+
 const GradualBlur = props => {
   const containerRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
@@ -128,21 +133,29 @@ const GradualBlur = props => {
 
       let blurValue;
       if (config.exponential) {
-        blurValue = math.pow(2, progress * 4) * 0.0625 * currentStrength;
+        blurValue = math.pow(2, progress * 4);
+        // Ensure blurValue is a number, not a BigNumber, for arithmetic
+        blurValue = (blurValue.toNumber ? blurValue.toNumber() : blurValue) * 0.0625 * currentStrength;
       } else {
         blurValue = 0.0625 * (progress * config.divCount + 1) * currentStrength;
       }
-      const p1 = math.round((increment * i - increment) * 10) / 10;
-      const p2 = math.round(increment * i * 10) / 10;
-      const p3 = math.round((increment * i + increment) * 10) / 10;
-      const p4 = math.round((increment * i + increment * 2) * 10) / 10;
-      let gradient = `transparent ${p1}%, black ${p2}%`;
-      if (p3 <= 100) gradient += `, black ${p3}%`;
-      if (p4 <= 100) gradient += `, transparent ${p4}%`;
+      // Ensure all position values for gradient are also numbers
+      const p1 = math.round((increment * i - increment) * 10);
+      const p2 = math.round(increment * i * 10);
+      const p3 = math.round((increment * i + increment) * 10);
+      const p4 = math.round((increment * i + increment * 2) * 10);
+      // Convert them to number if they are BigNumber objects
+      const n1 = toNum(p1);
+      const n2 = toNum(p2);
+      const n3 = toNum(p3);
+      const n4 = toNum(p4);
+      let gradient = `transparent ${n1}%, black ${n2}%`;
+      if (n3 <= 100) gradient += `, black ${n3}%`;
+      if (n4 <= 100) gradient += `, transparent ${n4}%`;
 
       const direction = getGradientDirection(config.position);
 
-      const divStyle = {
+      const divStyle: React.CSSProperties = {
         position: 'absolute',
         inset: '0',
         maskImage: `linear-gradient(${direction}, ${gradient})`,
@@ -213,7 +226,7 @@ const GradualBlur = props => {
     </div>
   );
 };
-const GradualBlurMemo = React.memo(GradualBlur);
+const GradualBlurMemo = React.memo(GradualBlur) as any;
 GradualBlurMemo.displayName = 'GradualBlur';
 GradualBlurMemo.PRESETS = PRESETS;
 GradualBlurMemo.CURVE_FUNCTIONS = CURVE_FUNCTIONS;
