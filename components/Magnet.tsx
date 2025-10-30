@@ -26,39 +26,38 @@ const Magnet: React.FC<MagnetProps> = ({
   const [position, setPosition] = useState<{ x: number; y: number }>({ x: 0, y: 0 });
   const magnetRef = useRef<HTMLDivElement>(null);
 
-useEffect(() => {
-  if (disabled) return; // Don’t attach listener if disabled
-
-  const handleMouseMove = (e: MouseEvent) => {
-    if (!magnetRef.current) return;
-
-    const { left, top, width, height } = magnetRef.current.getBoundingClientRect();
-    const centerX = left + width / 2;
-    const centerY = top + height / 2;
-
-    const distX = Math.abs(centerX - e.clientX);
-    const distY = Math.abs(centerY - e.clientY);
-
-    if (distX < width / 2 + padding && distY < height / 2 + padding) {
-      setIsActive(true);
-      const offsetX = (e.clientX - centerX) / magnetStrength;
-      const offsetY = (e.clientY - centerY) / magnetStrength;
-      setPosition({ x: offsetX, y: offsetY });
-    } else {
-      setIsActive(false);
+  useEffect(() => {
+    if (disabled) {
       setPosition({ x: 0, y: 0 });
+      return;
     }
-  };
 
-  window.addEventListener('mousemove', handleMouseMove);
+    const handleMouseMove = (e: MouseEvent) => {
+      if (!magnetRef.current) return;
 
-  // Cleanup: reset position when effect stops
-  return () => {
-    window.removeEventListener('mousemove', handleMouseMove);
-    setPosition({ x: 0, y: 0 }); // ✅ safe to set state here
-  };
-}, [padding, disabled, magnetStrength]);
+      const { left, top, width, height } = magnetRef.current.getBoundingClientRect();
+      const centerX = left + width / 2;
+      const centerY = top + height / 2;
 
+      const distX = Math.abs(centerX - e.clientX);
+      const distY = Math.abs(centerY - e.clientY);
+
+      if (distX < width / 2 + padding && distY < height / 2 + padding) {
+        setIsActive(true);
+        const offsetX = (e.clientX - centerX) / magnetStrength;
+        const offsetY = (e.clientY - centerY) / magnetStrength;
+        setPosition({ x: offsetX, y: offsetY });
+      } else {
+        setIsActive(false);
+        setPosition({ x: 0, y: 0 });
+      }
+    };
+
+    window.addEventListener('mousemove', handleMouseMove);
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove);
+    };
+  }, [padding, disabled, magnetStrength]);
 
   const transitionStyle = isActive ? activeTransition : inactiveTransition;
 
