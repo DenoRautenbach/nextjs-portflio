@@ -1,6 +1,10 @@
 "use client";
 import React from "react";
-import ProjectsLayout from "../components/ProjectsLayout";
+import dynamic from "next/dynamic";
+
+const ProjectsLayout = dynamic(() => import("../components/ProjectsLayout"), {
+  ssr: false,
+});
 
 const ProjectsPage = () => {
   return (

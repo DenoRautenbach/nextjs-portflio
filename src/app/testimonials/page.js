@@ -1,7 +1,10 @@
 "use client";
 import React from "react";
-import AboutLayoutSection from "../components/AboutLayoutSection";
-import TestimonialsLayout from "../components/Testimonials";
+import dynamic from "next/dynamic";
+
+const TestimonialsLayout = dynamic(() => import("../components/Testimonials"), {
+  ssr: false,
+});
 
 const TestimonialsPage = () => {
   return (

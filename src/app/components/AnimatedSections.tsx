@@ -7,7 +7,9 @@ import Image from "next/image";
 import art from "../assets/About/rugby4.png";
 import HomeLayoutSection from './HomeLayoutSection';
 
-gsap.registerPlugin(Observer, SplitText);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(Observer, SplitText);
+}
 
 const sectionsData = [
   { title: 'Lets explore', image: '/bgs/skills2.png' },

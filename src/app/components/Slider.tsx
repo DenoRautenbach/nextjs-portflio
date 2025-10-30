@@ -2,8 +2,10 @@ import React, { useEffect, useRef } from 'react';
 import { gsap } from 'gsap';
 import { Observer } from 'gsap/Observer';
 
-// Register the Observer plugin
-gsap.registerPlugin(Observer);
+// Register the Observer plugin (client only)
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(Observer);
+}
 
 interface SlideData {
   heading: string;

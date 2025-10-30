@@ -14,7 +14,9 @@ import Image from "next/image";
 import art from "../assets/About/rugby4.png";
 
 
-gsap.registerPlugin(ScrollTrigger);
+if (typeof window !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
 
 const SinglePageSetions = () => {
   const containerRef = useRef<HTMLDivElement>(null);
