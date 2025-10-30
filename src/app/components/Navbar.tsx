@@ -19,7 +19,6 @@ const Navbar: React.FC = () => {
         pillColor="rgba(255,255,255,0.2)"
         hoveredPillTextColor="#ffffff"
         pillTextColor="#ffffff"
-        borderColor="rgba(255,255,255,0.2)"
         onMobileMenuClick={undefined}
       />
     </div>

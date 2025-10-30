@@ -9,9 +9,11 @@ const HomeLayoutSection = () => {
             <section className="relative w-screen h-screen overflow-hidden bg-gradient-to-b from-black via-zinc-900 to-black">
             {/* Hyperspeed background */}
             <div className="absolute inset-0 z-0">
-                <Hyperspeed
-                className="w-full h-full"
-                effectOptions={{
+                <div className="w-full h-full">
+                    <Hyperspeed
+                    effectOptions={{
+                    onSpeedUp: () => {},
+                    onSlowDown: () => {},
                     distortion: "turbulentDistortion",
                     length: 400,
                     roadWidth: 10,
@@ -46,7 +48,8 @@ const HomeLayoutSection = () => {
                     sticks: 0x93c5fd,
                     },
                 }}
-                />
+                    />
+                </div>
             </div>
             {/* Overlay content */}
             <div className="absolute inset-0 flex flex-col items-center justify-center text-center text-white mb:-mt-[25rem] -mt-[5rem] ">

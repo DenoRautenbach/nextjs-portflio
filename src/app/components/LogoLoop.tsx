@@ -136,7 +136,23 @@ const useAnimationLoop = (trackRef, targetVelocity, seqWidth, isHovered, pauseOn
   }, [targetVelocity, seqWidth, isHovered, pauseOnHover, trackRef]);
 };
 
-export const LogoLoop = memo(
+interface LogoLoopProps {
+  logos: Array<{ node?: React.ReactNode; src?: string; srcSet?: string; sizes?: string; width?: number; height?: number; alt?: string; title?: string; href?: string; ariaLabel?: string; }>;
+  speed?: number;
+  direction?: 'left' | 'right';
+  width?: string | number;
+  logoHeight?: number;
+  gap?: number;
+  pauseOnHover?: boolean;
+  fadeOut?: boolean;
+  fadeOutColor?: string;
+  scaleOnHover?: boolean;
+  ariaLabel?: string;
+  className?: string;
+  style?: React.CSSProperties;
+}
+
+export const LogoLoop = memo<LogoLoopProps>(
   ({
     logos,
     speed = 120,
