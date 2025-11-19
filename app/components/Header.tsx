@@ -8,15 +8,15 @@ const Header = () => {
   const menuItems = [
     { label: 'Home', ariaLabel: 'Go to home page', link: '/' },
     { label: 'About', ariaLabel: 'Learn about us', link: '/about' },
-    { label: 'Places', ariaLabel: 'Explore our destinations', link: '/destinations' },
     { label: 'Services', ariaLabel: 'View our services', link: '/services' },
     { label: 'Contact', ariaLabel: 'Get in touch', link: '/contact' },
+    { label: 'Testimonials', ariaLabel: 'Explore our destinations', link: '/destinations' },
   ];
 
   const socialItems = [
-    { label: 'Twitter', link: 'https://twitter.com' },
-    { label: 'GitHub', link: 'https://github.com' },
-    { label: 'LinkedIn', link: 'https://linkedin.com' },
+    { label: 'Resumé', link: 'https://drive.google.com/file/d/1n83D2cESFx-vWTbqv9AiRL_VVO85fibv/view?usp=sharing' },
+    { label: 'GitHub', link: 'https://github.com/DenoRautenbach' },
+    { label: 'LinkedIn', link: 'https://www.linkedin.com/in/deno-rautenbach-b1698018a' },
   ];
 
   return (
@@ -32,9 +32,9 @@ const Header = () => {
           menuButtonColor="#0000000"
           openMenuButtonColor="#000000"
           changeMenuColorOnOpen={true}
-          colors={['#0D1B2A', '#D4AF37']}
+          colors={['#06141B', '#CCD0CF']}
           logoUrl="/path-to-your-logo.svg"
-          accentColor="#B02E0C"
+          accentColor="#06141B"
           onMenuOpen={() => setMenuOpen(true)}
           onMenuClose={() => setMenuOpen(false)}
         />

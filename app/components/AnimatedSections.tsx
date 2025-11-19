@@ -3,6 +3,8 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
+import Magnet from './Magnet';
+import Projectslayout from './ProjectsLayout';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Observer, SplitText);
@@ -12,22 +14,50 @@ if (typeof window !== 'undefined') {
 const AboutSection = () => (
   <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
     style={{
-      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(/bgs/skills2.png)`,
+      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(/bgs/bg.jpg)`,
     }}>
     <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
       Welcome
     </h2>
+      <div className="absolute md:bottom-80 bottom-70 z-20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4">
+        {[
+          {
+            label: 'LinkedIn',
+            href: 'https://www.linkedin.com/in/deno-rautenbach-b1698018a',
+          },
+          {
+            label: 'GitHub',
+            href: 'https://github.com/DenoRautenbach',
+          },
+          {
+            label: 'Resumé',
+            href: 'https://drive.google.com/file/d/1n83D2cESFx-vWTbqv9AiRL_VVO85fibv/view?usp=sharing',
+          },
+        ].map(({ label, href }) => (
+          <Magnet key={label} padding={60} magnetStrength={10}>
+            <a
+              href={href}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm sm:text-base text-white transition-all bg-black/10 hover:bg-white/10 backdrop-blur-sm"
+            >
+              <span>{label}</span>
+            </a>
+          </Magnet>
+        ))}
+      </div>
   </div>
 );
 
 const ProjectsSection = () => (
   <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
     style={{
-      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/skills3.webp)`,
+      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/bg5.jpg)`,
     }}>
     <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
       My Projects
     </h2>
+    <Projectslayout />
   </div>
 );
 
