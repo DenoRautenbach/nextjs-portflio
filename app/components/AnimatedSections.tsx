@@ -5,6 +5,7 @@ import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
 import Magnet from './Magnet';
 import Projectslayout from './ProjectsLayout';
+import Hero from './Hero';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Observer, SplitText);
@@ -16,10 +17,10 @@ const AboutSection = () => (
     style={{
       backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(/bgs/bg.jpg)`,
     }}>
-    <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
+    {/* <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
       Welcome
-    </h2>
-      <div className="absolute md:bottom-80 bottom-70 z-20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4">
+    </h2> */}
+    {/* <div className="absolute md:bottom-80 bottom-70 z-20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4">
         {[
           {
             label: 'LinkedIn',
@@ -45,7 +46,8 @@ const AboutSection = () => (
             </a>
           </Magnet>
         ))}
-      </div>
+      </div> */}
+    <Hero />
   </div>
 );
 
@@ -54,9 +56,15 @@ const ProjectsSection = () => (
     style={{
       backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/bg5.jpg)`,
     }}>
-    <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
-      My Projects
-    </h2>
+    <div className="flex flex-col items-start w-full px-4 md:px-12">
+      <div className="flex items-center gap-2 text-[#00f0ff] font-mono text-sm tracking-widest mb-4">
+        <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse" />
+        01. WORK
+      </div>
+      <h2 className="text-5xl md:text-7xl font-black tracking-normal mix-blend-difference text-white">
+        FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/20">PROJECTS</span>
+      </h2>
+    </div>
     <Projectslayout />
   </div>
 );
@@ -215,8 +223,8 @@ const AnimatedSections: React.FC = () => {
   }, []);
 
   return (
-    <div 
-      ref={wrapperRef} 
+    <div
+      ref={wrapperRef}
       className="fixed top-0 left-0 z-20 h-screen w-full overflow-hidden text-white uppercase"
     >
       {sectionComponents.map((SectionComponent, i) => (

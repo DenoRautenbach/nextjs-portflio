@@ -14,8 +14,6 @@ if (typeof window !== 'undefined') {
 const Keyboard = () => (
     <div className="">
         <input id="dark" type="checkbox" />
-            <label className="dark" htmlFor="dark">🌚</label>
-            <label className="light" htmlFor="dark">🌞</label>
             <div className="wrapper">
             <div className="keyboard">
             <div className="left">
