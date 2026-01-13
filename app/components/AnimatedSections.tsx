@@ -6,6 +6,8 @@ import { SplitText } from 'gsap/SplitText';
 import Magnet from './Magnet';
 import Projectslayout from './ProjectsLayout';
 import Hero from './Hero';
+import ContactForm from './ContactForm';
+import MarvelIntro from './MarvelIntro';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Observer, SplitText);
@@ -69,16 +71,24 @@ const ProjectsSection = () => (
   </div>
 );
 
-const ContactSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
-    style={{
-      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/mushashi.png)`,
-    }}>
-    <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
-      Get In Touch
-    </h2>
-  </div>
-);
+const ContactSection = () => {
+  const [isFormVisible, setIsFormVisible] = React.useState(false);
+
+  return (
+    <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-black">
+        <div className="absolute inset-0 z-0">
+            <MarvelIntro onRevealChange={setIsFormVisible} />
+        </div>
+      <div 
+        className={`relative z-10 flex flex-col items-center justify-center w-full max-w-4xl px-4 gap-8 md:ml-auto md:mr-20 transition-opacity duration-1000 ease-in-out ${
+          isFormVisible ? 'opacity-100' : 'opacity-0'
+        }`}
+      >
+          <ContactForm />
+      </div>
+    </div>
+  );
+};
 
 const TestimonialsSection = () => (
   <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
