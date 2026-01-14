@@ -8,7 +8,8 @@ import Projectslayout from './ProjectsLayout';
 import Hero from './Hero';
 import ContactForm from './ContactForm';
 import MarvelIntro from './MarvelIntro';
-import Testimonials from './TestimonialsDome';
+import Testimonials from './DomeSection';
+import Explore from './Explore';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Observer, SplitText);
@@ -20,36 +21,6 @@ const AboutSection = () => (
     style={{
       backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(/bgs/bg.jpg)`,
     }}>
-    {/* <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
-      Welcome
-    </h2> */}
-    {/* <div className="absolute md:bottom-80 bottom-70 z-20 flex flex-wrap items-center justify-center gap-4 sm:gap-6 md:gap-8 px-4">
-        {[
-          {
-            label: 'LinkedIn',
-            href: 'https://www.linkedin.com/in/deno-rautenbach-b1698018a',
-          },
-          {
-            label: 'GitHub',
-            href: 'https://github.com/DenoRautenbach',
-          },
-          {
-            label: 'Resumé',
-            href: 'https://drive.google.com/file/d/1n83D2cESFx-vWTbqv9AiRL_VVO85fibv/view?usp=sharing',
-          },
-        ].map(({ label, href }) => (
-          <Magnet key={label} padding={60} magnetStrength={10}>
-            <a
-              href={href}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 rounded-full border border-white/40 px-6 py-3 text-sm sm:text-base text-white transition-all bg-black/10 hover:bg-white/10 backdrop-blur-sm"
-            >
-              <span>{label}</span>
-            </a>
-          </Magnet>
-        ))}
-      </div> */}
     <Hero />
   </div>
 );
@@ -77,15 +48,14 @@ const ContactSection = () => {
 
   return (
     <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-black">
-        <div className="absolute inset-0 z-0">
-            <MarvelIntro onRevealChange={setIsFormVisible} />
-        </div>
-      <div 
-        className={`relative z-10 flex flex-col items-center justify-center w-full max-w-4xl px-4 gap-8 md:ml-auto md:mr-20 transition-opacity duration-1000 ease-in-out ${
-          isFormVisible ? 'opacity-100' : 'opacity-0'
-        }`}
+      <div className="absolute inset-0 z-0">
+        <MarvelIntro onRevealChange={setIsFormVisible} />
+      </div>
+      <div
+        className={`relative z-10 flex flex-col items-center justify-center w-full max-w-4xl px-4 gap-8 md:ml-auto md:mr-20 transition-opacity duration-1000 ease-in-out ${isFormVisible ? 'opacity-100' : 'opacity-0'
+          }`}
       >
-          <ContactForm />
+        <ContactForm />
       </div>
     </div>
   );
@@ -98,15 +68,11 @@ const TestimonialsSection = () => (
 );
 
 const ExploreSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
-    style={{
-      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/home4.png)`,
-    }}>
-    <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
-      Explore More
-    </h2>
+  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden">
+    <Explore />
   </div>
 );
+
 
 // Main Component
 const AnimatedSections: React.FC = () => {
