@@ -8,6 +8,7 @@ import Projectslayout from './ProjectsLayout';
 import Hero from './Hero';
 import ContactForm from './ContactForm';
 import MarvelIntro from './MarvelIntro';
+import Testimonials from './TestimonialsDome';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Observer, SplitText);
@@ -91,13 +92,8 @@ const ContactSection = () => {
 };
 
 const TestimonialsSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
-    style={{
-      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/home3.webp)`,
-    }}>
-    <h2 className="animated-heading section-heading text-center text-[clamp(1rem,8vw,10rem)] font-semibold w-[90vw] max-w-[1200px]">
-      Testimonials
-    </h2>
+  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden">
+    <Testimonials />
   </div>
 );
 
