@@ -62,13 +62,21 @@ const ContactSection = () => {
 };
 
 const TestimonialsSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden">
+  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden bg-cover bg-center"
+    style={{
+      backgroundImage: 'url(/bgs/bulb.jpg)',
+      backgroundAttachment: 'fixed'
+    }}>
     <Testimonials />
   </div>
 );
 
 const ExploreSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden">
+  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden bg-cover bg-center"
+    style={{
+      backgroundImage: 'url(/bgs/bulb.jpg)',
+      backgroundAttachment: 'fixed'
+    }}>
     <Explore />
   </div>
 );
