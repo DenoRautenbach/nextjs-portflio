@@ -275,7 +275,7 @@ label {
 }
 
 .wrapper {
-  background-color: hsl(240deg, 20%, calc(var(--l) - 10%));
+  background-color: transparent;
   position: fixed;
   inset: 0;
   display: flex;

@@ -3,71 +3,28 @@ import React, { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { Observer } from 'gsap/Observer';
 import { SplitText } from 'gsap/SplitText';
-import Magnet from './Magnet';
-import Projectslayout from './ProjectsLayout';
+
 import Hero from './Hero';
-import ContactForm from './ContactForm';
-import MarvelIntro from './MarvelIntro';
-import Testimonials from './DomeSection';
 import Explore from './Explore';
+import ProjectsSection from './ProjectsSection';
+import ContactSection from './ContactSection';
+import AboutSection from './AboutSection';
+import TestimonialsSection from './TestimonialsSection';
+
+import SiteHeader from './SiteHeader';
+import SiteFooter from './SiteFooter';
 
 if (typeof window !== 'undefined') {
   gsap.registerPlugin(Observer, SplitText);
 }
 
 // Individual Section Components
-const AboutSection = () => (
+const HeroSection = () => (
   <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
     style={{
       backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(/bgs/bg.jpg)`,
     }}>
     <Hero />
-  </div>
-);
-
-const ProjectsSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-cover bg-center"
-    style={{
-      backgroundImage: `linear-gradient(180deg, rgba(0,0,0,0.6) 0%, rgba(0,0,0,0.1) 100%), url(bgs/bg5.jpg)`,
-    }}>
-    <div className="flex flex-col items-start w-full px-4 md:px-12">
-      <div className="flex items-center gap-2 text-[#00f0ff] font-mono text-sm tracking-widest mb-4">
-        <span className="w-2 h-2 bg-[#00f0ff] rounded-full animate-pulse" />
-        01. WORK
-      </div>
-      <h2 className="text-5xl md:text-7xl font-black tracking-normal mix-blend-difference text-white">
-        FEATURED <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-white/20">PROJECTS</span>
-      </h2>
-    </div>
-    <Projectslayout />
-  </div>
-);
-
-const ContactSection = () => {
-  const [isFormVisible, setIsFormVisible] = React.useState(false);
-
-  return (
-    <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full bg-black">
-      <div className="absolute inset-0 z-0">
-        <MarvelIntro onRevealChange={setIsFormVisible} />
-      </div>
-      <div
-        className={`relative z-10 flex flex-col items-center justify-center w-full max-w-4xl px-4 gap-8 md:ml-auto md:mr-20 transition-opacity duration-1000 ease-in-out ${isFormVisible ? 'opacity-100' : 'opacity-0'
-          }`}
-      >
-        <ContactForm />
-      </div>
-    </div>
-  );
-};
-
-const TestimonialsSection = () => (
-  <div className="animated-bg flex items-center justify-center absolute top-0 left-0 w-full h-full overflow-hidden bg-cover bg-center"
-    style={{
-      backgroundImage: 'url(/bgs/bulb.jpg)',
-      backgroundAttachment: 'fixed'
-    }}>
-    <Testimonials />
   </div>
 );
 
@@ -81,19 +38,42 @@ const ExploreSection = () => (
   </div>
 );
 
-
 // Main Component
 const AnimatedSections: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const currentIndexRef = useRef(-1);
 
-  // Array of section components - change order or add/remove sections here
+  // Array of section components
+  const ProjectsSectionWrapper = () => (
+    <div className="animated-bg w-full h-full">
+      <ProjectsSection />
+    </div>
+  );
+
+  const TestimonialsSectionWrapper = () => (
+    <div className="animated-bg w-full h-full">
+      <TestimonialsSection />
+    </div>
+  );
+
+  const AboutSectionWrapper = () => (
+    <div className="animated-bg w-full h-full">
+      <AboutSection />
+    </div>
+  );
+
+  const ContactSectionWrapper = () => (
+    <div className="animated-bg w-full h-full">
+      <ContactSection />
+    </div>
+  );
+
   const sectionComponents = [
-    AboutSection,
-    ProjectsSection,
-    ContactSection,
-    TestimonialsSection,
-    ExploreSection,
+    HeroSection,
+    ProjectsSectionWrapper,
+    AboutSectionWrapper,
+    TestimonialsSectionWrapper,
+    ContactSectionWrapper,
   ];
 
   useEffect(() => {
@@ -182,6 +162,7 @@ const AnimatedSections: React.FC = () => {
       type: 'wheel,touch',
       wheelSpeed: -1,
       preventDefault: true,
+
       onDown: () => {
         if (!animating && currentIndexRef.current > 0) {
           gotoSection(currentIndexRef.current - 1, -1);
@@ -207,6 +188,8 @@ const AnimatedSections: React.FC = () => {
       ref={wrapperRef}
       className="fixed top-0 left-0 z-20 h-screen w-full overflow-hidden text-white uppercase"
     >
+      <SiteHeader />
+      <SiteFooter />
       {sectionComponents.map((SectionComponent, i) => (
         <section
           key={i}
