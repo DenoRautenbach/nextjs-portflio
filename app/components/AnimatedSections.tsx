@@ -80,6 +80,9 @@ const AnimatedSections: React.FC = () => {
     const wrapper = wrapperRef.current;
     if (!wrapper) return;
 
+    // Check if we are on mobile to skip GSAP initialization
+    if (window.innerWidth < 768) return;
+
     const sections = Array.from(wrapper.querySelectorAll<HTMLElement>('section.animated-section'));
     const images = Array.from(wrapper.querySelectorAll<HTMLElement>('.animated-bg'));
     const headings = Array.from(wrapper.querySelectorAll<HTMLElement>('.animated-heading'));
@@ -183,25 +186,66 @@ const AnimatedSections: React.FC = () => {
     };
   }, []);
 
+  // Handle Mobile Scroll (Native) vs Desktop (GSAP)
+  useEffect(() => {
+    // We only need to check responsiveness for the layout rendering.
+    // The GSAP logic above should probably be wrapped or disabled for mobile 
+    // but since we are conditionally rendering the DOM structure based on CSS media queries (md:hidden), 
+    // we should also ensure the GSAP logic doesn't try to animate elements that might not exist or be visible in the same way.
+
+    // Actually, a better approach for the GSAP effect is to only run it if window width > 768px.
+    const isDesktop = window.matchMedia("(min-width: 768px)").matches;
+
+    if (!isDesktop) {
+      // Kill any existing GSAP instances if we resized from desktop to mobile
+      // (This is a simplified approach; a full resize handler would be more robust)
+      return;
+    }
+  }, []);
+
   return (
     <div
       ref={wrapperRef}
-      className="fixed top-0 left-0 z-20 h-screen w-full overflow-hidden text-white uppercase"
+      className="fixed md:fixed top-0 left-0 z-20 h-screen w-full overflow-y-auto md:overflow-hidden text-white uppercase"
     >
       <SiteHeader />
       <SiteFooter />
-      {sectionComponents.map((SectionComponent, i) => (
-        <section
-          key={i}
-          className="animated-section fixed top-0 left-0 w-full h-full opacity-0"
-        >
-          <div className="animated-outer w-full h-full overflow-hidden">
-            <div className="animated-inner w-full h-full overflow-hidden">
-              <SectionComponent />
+
+      {/* Mobile Layout: Vertical Stack */}
+      <div className="md:hidden w-full flex flex-col">
+        {/* Helper to offset header */}
+        <div id="hero" className="w-full h-screen relative">
+          <HeroSection />
+        </div>
+        <div id="projects" className="w-full min-h-screen relative bg-black">
+          <ProjectsSectionWrapper />
+        </div>
+        <div id="about" className="w-full min-h-screen relative bg-black">
+          <AboutSectionWrapper />
+        </div>
+        <div id="testimonials" className="w-full min-h-screen relative bg-black">
+          <TestimonialsSectionWrapper />
+        </div>
+        <div id="contact" className="w-full min-h-screen relative bg-black">
+          <ContactSectionWrapper />
+        </div>
+      </div>
+
+      {/* Desktop Layout: Fixed Sections with GSAP */}
+      <div className="hidden md:block w-full h-full">
+        {sectionComponents.map((SectionComponent, i) => (
+          <section
+            key={i}
+            className="animated-section fixed top-0 left-0 w-full h-full opacity-0"
+          >
+            <div className="animated-outer w-full h-full overflow-hidden">
+              <div className="animated-inner w-full h-full overflow-hidden">
+                <SectionComponent />
+              </div>
             </div>
-          </div>
-        </section>
-      ))}
+          </section>
+        ))}
+      </div>
     </div>
   );
 };

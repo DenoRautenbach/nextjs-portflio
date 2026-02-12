@@ -14,11 +14,9 @@ export default function TestimonialsSection() {
 
             <div className="absolute inset-0 z-10 pointer-events-none bg-[radial-gradient(circle_at_center,transparent_0%,#000_100%)] opacity-50" />
 
-            <main className="relative z-30 w-full h-full flex flex-col justify-center items-center px-4">
+            <main className="relative z-30 w-full min-h-screen flex flex-col justify-start md:justify-center items-center px-4 pt-32 md:pt-0">
 
-                <div className="absolute top-[15%] font-mono text-[#00f0ff] text-xs tracking-[0.3em] uppercase animate-pulse">
-                    Client Intel
-                </div>
+
 
                 <div className="relative mix-blend-difference text-center mb-12">
                     <SkewText className="text-[10vw] md:text-[6vw] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/0 select-none">

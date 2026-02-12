@@ -8,8 +8,8 @@ const navLinks = [
     { name: 'HOME', href: '#hero', sectionIndex: 0 },
     { name: 'ABOUT', href: '#about', sectionIndex: 1 },
     { name: 'PROJECTS', href: '#projects', sectionIndex: 2 },
-    { name: 'CONTACT', href: '#contact', sectionIndex: 3 },
     { name: 'TESTIMONIALS', href: '#testimonials', sectionIndex: 4 },
+    { name: 'CONTACT', href: '#contact', sectionIndex: 3 },
 ];
 
 export default function SiteHeader() {
@@ -30,7 +30,7 @@ export default function SiteHeader() {
     return (
         <>
             <header
-                className={`fixed top-0 left-0 w-full z-[100] transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md py-4' : 'bg-transparent py-6 md:py-8'
+                className={`fixed top-0 left-0 w-full z-[120] transition-all duration-300 ${scrolled ? 'bg-black/50 backdrop-blur-md py-4' : 'bg-transparent py-6 md:py-8'
                     }`}
             >
                 <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
@@ -87,11 +87,9 @@ export default function SiteHeader() {
                             className="group relative overflow-hidden"
                             style={{ transitionDelay: `${index * 50}ms` }}
                         >
-                            <SkewText
-                                className={`text-4xl font-black text-white group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-white group-hover:to-[#00f0ff] transition-all duration-300 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}
-                            >
+                            <span className={`text-4xl font-black text-white group-hover:text-[#00f0ff] transition-all duration-300 ${isMenuOpen ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'}`}>
                                 {link.name}
-                            </SkewText>
+                            </span>
                         </a>
                     ))}
                 </div>
