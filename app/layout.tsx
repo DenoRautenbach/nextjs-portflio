@@ -16,6 +16,9 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "Deno Portfolio",
   description: "A portfolio site built by Deno",
+  icons: {
+    icon: "/logo.svg",
+  },
 };
 
 export default function RootLayout({

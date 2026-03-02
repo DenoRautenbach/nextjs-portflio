@@ -1,7 +1,8 @@
 'use client';
 
 import React, { useState, useEffect } from 'react';
-import { Hexagon, Menu, X, ArrowUpRight } from 'lucide-react';
+import { Menu, X, ArrowUpRight } from 'lucide-react';
+import Image from 'next/image';
 import SkewText from './SkewText';
 
 const navLinks = [
@@ -37,8 +38,7 @@ export default function SiteHeader() {
 
                     {/* Logo */}
                     <div className="flex items-center gap-2 font-mono text-sm tracking-widest text-white mix-blend-difference z-[110] relative">
-                        <Hexagon size={16} className="text-[#00f0ff]" />
-                        <span className="font-bold">AETHER</span>
+                        <Image src="/logo.svg" alt="DR Logo" width={20} height={20} className="object-contain" />
                     </div>
 
                     {/* Desktop Navigation */}
@@ -92,11 +92,6 @@ export default function SiteHeader() {
                             </span>
                         </a>
                     ))}
-                </div>
-
-                <div className={`absolute bottom-12 flex flex-col items-center gap-4 transition-all duration-500 delay-300 ${isMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-10'}`}>
-                    <div className="w-12 h-1 bg-[#00f0ff] rounded-full" />
-                    <p className="font-mono text-xs text-white/50">AETHER GRID v3.0</p>
                 </div>
             </div>
         </>

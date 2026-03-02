@@ -39,7 +39,6 @@ const Preloader: React.FC<PreloaderProps> = ({ onComplete }) => {
     return (
         <div className={`fixed inset-0 z-50 bg-black flex flex-col justify-between p-8 md:p-12 transition-transform duration-1000 ease-[cubic-bezier(0.76,0,0.24,1)] ${count === 100 ? '-translate-y-full' : 'translate-y-0'}`}>
             <div className="flex justify-between items-start text-white/50 font-mono text-xs">
-                <span>AETHER GRID v3.0</span>
                 <span>INITIALIZING...</span>
             </div>
 
@@ -81,7 +80,7 @@ export default function Hero() {
             <main className={`relative z-30 w-screen h-full flex flex-col justify-center items-center px-4 transition-all duration-1000 delay-700 ${loading ? 'opacity-0 scale-95 blur-sm' : 'opacity-100 scale-100 blur-0'}`}>
 
                 <div className="absolute top-[20%] font-mono text-[#00f0ff] text-xs tracking-[0.3em] uppercase animate-pulse">
-                    Digital Reality Engine
+                    Let's Get Coding
                 </div>
 
                 <div className="relative mix-blend-difference text-center">
@@ -98,9 +97,9 @@ export default function Hero() {
 
                 <div className="mt-12 max-w-md text-center">
                     <p className="text-white/60 font-mono text-sm leading-relaxed backdrop-blur-sm p-4 border border-white/5 rounded-lg">
-                        Building digital cathedrals in the cloud.
+                        Building digital experiences on the web.
                         <br />
-                        Experiences that defy gravity and logic.
+                        Let's make something amazing together.
                     </p>
                 </div>
 

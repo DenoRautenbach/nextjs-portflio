@@ -12,7 +12,7 @@ export default function SiteFooter() {
                 <div className="flex flex-col gap-2 font-mono text-[10px] text-white/60">
                     <div className="flex items-center gap-2">
                         <span className="w-2 h-2 rounded-full bg-[#00f0ff] animate-pulse" />
-                        SYSTEM OPERATIONAL
+                        SOMEWHERE IN A DARK ROOM
                     </div>
                     <div>34.0522° N, 118.2437° W</div>
                 </div>
