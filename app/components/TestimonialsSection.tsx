@@ -39,14 +39,9 @@ export default function TestimonialsSection() {
                             <div className="border-t border-white/10 pt-6">
                                 <div className="flex items-center justify-between mb-2">
                                     <h4 className="text-white font-bold text-sm font-mono tracking-tight">{testimonial.name}</h4>
-                                    <div className="flex gap-1">
-                                        {[...Array(testimonial.rating)].map((_, i) => (
-                                            <Star key={i} size={12} className="fill-[#00f0ff] text-[#00f0ff]" />
-                                        ))}
-                                    </div>
                                 </div>
                                 <div className="text-xs font-mono text-[#00f0ff]/80">
-                                    {testimonial.role} @ {testimonial.company}
+                                    {testimonial.role}
                                 </div>
                             </div>
 

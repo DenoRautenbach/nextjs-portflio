@@ -18,13 +18,6 @@ export default function SiteFooter() {
                 </div>
             </div>
 
-            {/* Bottom Right - CTA */}
-            <div className="absolute bottom-8 right-8 md:bottom-12 md:right-12 pointer-events-auto">
-                <button className="bg-white text-black px-6 py-3 font-bold font-mono text-xs hover:bg-[#00f0ff] transition-colors duration-300 flex items-center gap-2 group">
-                    START PROJECT
-                    <ArrowUpRight size={14} className="group-hover:-translate-y-1 group-hover:translate-x-1 transition-transform" />
-                </button>
-            </div>
 
         </footer>
     );

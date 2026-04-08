@@ -20,7 +20,7 @@ export default function AboutSection() {
 
                 <div className="relative mix-blend-difference text-center mb-12">
                     <SkewText className="text-[10vw] md:text-[8vw] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/0 select-none">
-                        PROFILE
+                        ABOUT
                     </SkewText>
                 </div>
 
@@ -30,20 +30,20 @@ export default function AboutSection() {
                         <div className="group relative bg-white/5 border border-white/10 rounded-lg p-6 backdrop-blur-sm hover:border-[#00f0ff]/50 transition-colors duration-500">
                             <h3 className="text-xl font-bold font-mono tracking-tight text-[#00f0ff] mb-4 flex items-center gap-2">
                                 <Cpu size={20} />
-                                DIGITAL ARCHITECT
+                                FULL STACK EXPERTISE
                             </h3>
                             <p className="text-white/60 text-sm leading-relaxed font-mono">
-                                Obsessed with creating digital experiences that defy gravity. I specialize in merging high-performance code with cutting-edge visual design.
+                                I specialize in Full Stack Development. This includes Front-End as well as Backend.
                             </p>
                         </div>
 
                         <div className="group relative bg-white/5 border border-white/10 rounded-lg p-6 backdrop-blur-sm hover:border-[#00f0ff]/50 transition-colors duration-500">
                             <h3 className="text-xl font-bold font-mono tracking-tight text-[#00f0ff] mb-4 flex items-center gap-2">
                                 <Globe size={20} />
-                                GLOBAL REACH
+                                PASSION & PURSUIT
                             </h3>
                             <p className="text-white/60 text-sm leading-relaxed font-mono">
-                                Based in the cloud, working with visionary clients worldwide to build the next generation of the web.
+                                In my free time you&apos;ll find me in front of a computer screen learning something new. Be it a Language, Programming language, Mathematics, Philosophy, Mythology or even Classical Literature. My favorite pass time is learning something new! Even so, I still enjoy sports and any outdoor activity just to be closer to nature.
                             </p>
                         </div>
                     </div>
@@ -66,9 +66,14 @@ export default function AboutSection() {
 
                         <div className="flex justify-center mt-8">
                             <Magnet padding={50} disabled={false} magnetStrength={20}>
-                                <button className="px-8 py-4 bg-white text-black font-bold font-mono text-sm hover:bg-[#00f0ff] transition-colors duration-300 rounded uppercase tracking-wider">
+                                <a 
+                                    href="https://drive.google.com/file/d/1n83D2cESFx-vWTbqv9AiRL_VVO85fibv/view?usp=drive_link"
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                    className="px-8 py-4 bg-white text-black font-bold font-mono text-sm hover:bg-[#00f0ff] transition-colors duration-300 rounded uppercase tracking-wider inline-block text-center"
+                                >
                                     Download Resume
-                                </button>
+                                </a>
                             </Magnet>
                         </div>
                     </div>

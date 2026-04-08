@@ -68,7 +68,7 @@ const Testimonials = () => {
                 </div>
 
                 <p className="text-white/80 text-lg leading-relaxed mb-8 flex-grow font-light">
-                  "{testimonial.content}"
+                  &quot;{testimonial.content}&quot;
                 </p>
 
                 <div className="border-t border-white/10 pt-6">
@@ -81,7 +81,7 @@ const Testimonials = () => {
                     </div>
                   </div>
                   <div className="text-sm font-mono text-[#00f0ff]/80">
-                    {testimonial.role} @ {testimonial.company}
+                    {testimonial.role}
                   </div>
                 </div>
               </div>

@@ -38,35 +38,44 @@ const ExploreSection = () => (
   </div>
 );
 
+const ProjectsSectionWrapper = () => (
+  <div className="animated-bg w-full h-full">
+    <ProjectsSection />
+  </div>
+);
+
+const TestimonialsSectionWrapper = () => (
+  <div className="animated-bg w-full h-full">
+    <TestimonialsSection />
+  </div>
+);
+
+const AboutSectionWrapper = () => (
+  <div className="animated-bg w-full h-full">
+    <AboutSection />
+  </div>
+);
+
+const ContactSectionWrapper = () => (
+  <div className="animated-bg w-full h-full">
+    <ContactSection />
+  </div>
+);
+
 // Main Component
 const AnimatedSections: React.FC = () => {
   const wrapperRef = useRef<HTMLDivElement>(null);
   const currentIndexRef = useRef(-1);
+  const animatingRef = useRef(false);
+  const gotoSectionRef = useRef<((index: number, direction: number) => void) | null>(null);
+
+  const handleNavClick = (index: number) => {
+    if (animatingRef.current || index === currentIndexRef.current || !gotoSectionRef.current) return;
+    const direction = index > currentIndexRef.current ? 1 : -1;
+    gotoSectionRef.current(index, direction);
+  };
 
   // Array of section components
-  const ProjectsSectionWrapper = () => (
-    <div className="animated-bg w-full h-full">
-      <ProjectsSection />
-    </div>
-  );
-
-  const TestimonialsSectionWrapper = () => (
-    <div className="animated-bg w-full h-full">
-      <TestimonialsSection />
-    </div>
-  );
-
-  const AboutSectionWrapper = () => (
-    <div className="animated-bg w-full h-full">
-      <AboutSection />
-    </div>
-  );
-
-  const ContactSectionWrapper = () => (
-    <div className="animated-bg w-full h-full">
-      <ContactSection />
-    </div>
-  );
 
   const sectionComponents = [
     HeroSection,
@@ -97,7 +106,6 @@ const AnimatedSections: React.FC = () => {
         })
     );
 
-    let animating = false;
     const wrap = gsap.utils.wrap(0, sections.length);
 
     gsap.set(outerWrappers, { yPercent: 100 });
@@ -118,13 +126,13 @@ const AnimatedSections: React.FC = () => {
       }
 
       index = wrap(index);
-      animating = true;
+      animatingRef.current = true;
       const fromTop = direction === -1;
       const dFactor = fromTop ? -1 : 1;
 
       const tl = gsap.timeline({
         defaults: { duration: 1.25, ease: 'power1.inOut' },
-        onComplete: () => { animating = false; },
+        onComplete: () => { animatingRef.current = false; },
       });
 
       if (currentIndexRef.current >= 0 && sections[currentIndexRef.current]) {
@@ -159,6 +167,8 @@ const AnimatedSections: React.FC = () => {
       currentIndexRef.current = index;
     }
 
+    gotoSectionRef.current = gotoSection;
+
     // Observer for animated sections
     const observer = Observer.create({
       target: wrapper,
@@ -167,12 +177,12 @@ const AnimatedSections: React.FC = () => {
       preventDefault: true,
 
       onDown: () => {
-        if (!animating && currentIndexRef.current > 0) {
+        if (!animatingRef.current && currentIndexRef.current > 0) {
           gotoSection(currentIndexRef.current - 1, -1);
         }
       },
       onUp: () => {
-        if (!animating && currentIndexRef.current < sections.length - 1) {
+        if (!animatingRef.current && currentIndexRef.current < sections.length - 1) {
           gotoSection(currentIndexRef.current + 1, 1);
         }
       },
@@ -208,7 +218,7 @@ const AnimatedSections: React.FC = () => {
       ref={wrapperRef}
       className="fixed md:fixed top-0 left-0 z-20 h-screen w-full overflow-y-auto md:overflow-hidden text-white uppercase"
     >
-      <SiteHeader />
+      <SiteHeader onNavLinkClick={handleNavClick} />
       <SiteFooter />
 
       {/* Mobile Layout: Vertical Stack */}

@@ -26,14 +26,20 @@ const ProjectsSection = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 max-w-7xl w-full px-4 md:px-12">
                     {projectsData.map((project) => (
-                        <div key={project.id} className="group relative bg-white/5 border border-white/10 rounded-lg overflow-hidden hover:border-[#00f0ff]/50 transition-colors duration-500">
+                        <a 
+                            key={project.id} 
+                            href={project.link} 
+                            target="_blank" 
+                            rel="noopener noreferrer" 
+                            className="group relative bg-white/5 border border-white/10 rounded-lg overflow-hidden hover:border-[#00f0ff]/50 transition-colors duration-500 block cursor-pointer"
+                        >
                             <div className="relative h-48 overflow-hidden bg-black">
                                 <div className="absolute inset-0 bg-[#00f0ff]/20 mix-blend-overlay z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
                                 <div className="absolute inset-0 flex justify-center items-center">
                                     <Magnet padding={50} disabled={false} magnetStrength={20}>
-                                        <a href={project.link} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-white text-black font-bold font-mono text-sm hover:bg-[#00f0ff] transition-colors duration-300 rounded">
+                                        <div className="px-6 py-3 bg-white text-black font-bold font-mono text-sm group-hover:bg-[#00f0ff] transition-colors duration-300 rounded">
                                             View Project
-                                        </a>
+                                        </div>
                                     </Magnet>
                                 </div>
                             </div>
@@ -45,7 +51,7 @@ const ProjectsSection = () => {
                                     {project.description}
                                 </p>
                             </div>
-                        </div>
+                        </a>
                     ))}
                 </div>
 

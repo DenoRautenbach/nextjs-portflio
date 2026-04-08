@@ -1,29 +1,45 @@
 'use client';
 
-import React, { useState } from 'react';
 import { Send, Terminal } from 'lucide-react';
+import { useForm, ValidationError } from '@formspree/react';
+import React, { useEffect } from 'react';
 
 export default function ContactForm() {
-    const [formState, setFormState] = useState({
-        name: '',
-        email: '',
-        message: ''
-    });
-    const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isSent, setIsSent] = useState(false);
+    const [state, handleSubmit] = useForm("xbdpbdwn");
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setIsSubmitting(true);
-        
-        // Simulate sending
-        await new Promise(resolve => setTimeout(resolve, 2000));
-        
-        setIsSubmitting(false);
-        setIsSent(true);
-        setTimeout(() => setIsSent(false), 3000);
-        setFormState({ name: '', email: '', message: '' });
+    useEffect(() => {
+        if (state.submitting) console.log("FORMSPREE_STATUS: Submitting data packet...");
+        if (state.succeeded) console.log("FORMSPREE_STATUS: Transmission successful!");
+        if (state.errors) {
+            console.error("FORMSPREE_ERROR: Data corruption detected:", state.errors);
+        }
+    }, [state]);
+
+    const handleDebugSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+        const formData = new FormData(e.currentTarget);
+        console.log("FORMSPREE_DEBUG: Preparing packet:", Object.fromEntries(formData.entries()));
+        handleSubmit(e);
     };
+
+    if (state.succeeded) {
+        return (
+            <div className="flex flex-col items-center justify-center min-h-[400px] text-center p-8">
+                <div className="w-16 h-16 bg-[#00f0ff]/20 rounded-full flex items-center justify-center mb-6">
+                    <Send className="text-[#00f0ff]" size={32} />
+                </div>
+                <h3 className="text-2xl font-bold text-white mb-2">TRANSMISSION_COMPLETE</h3>
+                <p className="text-white/60 font-mono text-sm max-w-sm">
+                    Connection established. Data packet received. I will get back to you shortly.
+                </p>
+                <button 
+                    onClick={() => window.location.reload()} 
+                    className="mt-8 text-[#00f0ff] font-mono text-xs hover:underline"
+                >
+                    SEND_ANOTHER_MESSAGE
+                </button>
+            </div>
+        );
+    }
 
     return (
         <>
@@ -49,53 +65,58 @@ export default function ContactForm() {
                     <span>ESTABLISH_CONNECTION</span>
                 </div>
 
-                <form onSubmit={handleSubmit} className="space-y-6 w-100">
+                <form 
+                    action="https://formspree.io/f/xbdpbdwn"
+                    method="POST"
+                    onSubmit={handleDebugSubmit} 
+                    className="space-y-6 w-100"
+                >
                     <div className="space-y-2">
                         <input
                             type="text"
                             id="name"
+                            name="name"
                             required
-                            value={formState.name}
-                            onChange={e => setFormState({...formState, name: e.target.value})}
                             className="w-full bg-white/5 border-b border-white/10 px-0 py-2 text-white font-sans focus:outline-none focus:border-[#00f0ff] focus:bg-white/10 transition-all placeholder:text-white/20"
                             placeholder="ENTER_NAME"
                         />
+                        <ValidationError prefix="Name" field="name" errors={state.errors} className="text-red-500 font-mono text-[10px]" />
                     </div>
 
                     <div className="space-y-2">
                         <input
                             type="email"
                             id="email"
+                            name="email"
                             required
-                            value={formState.email}
-                            onChange={e => setFormState({...formState, email: e.target.value})}
                             className="w-full bg-white/5 border-b border-white/10 px-0 py-2 text-white font-sans focus:outline-none focus:border-[#00f0ff] focus:bg-white/10 transition-all placeholder:text-white/20"
                             placeholder="ENTER_EMAIL"
                         />
+                        <ValidationError prefix="Email" field="email" errors={state.errors} className="text-red-500 font-mono text-[10px]" />
                     </div>
 
                     <div className="space-y-2">
                         <textarea
                             id="message"
+                            name="message"
                             required
                             rows={4}
-                            value={formState.message}
-                            onChange={e => setFormState({...formState, message: e.target.value})}
                             className="w-full bg-white/5 border-b border-white/10 px-0 py-2 text-white font-sans focus:outline-none focus:border-[#00f0ff] focus:bg-white/10 transition-all placeholder:text-white/20 resize-none"
                             placeholder="ENTER_MESSAGE_DATA..."
                         />
+                        <ValidationError prefix="Message" field="message" errors={state.errors} className="text-red-500 font-mono text-[10px]" />
                     </div>
 
                     <button
                         type="submit"
-                        disabled={isSubmitting}
+                        disabled={state.submitting}
                         className="w-full bg-white text-black font-bold font-mono text-xs py-4 hover:bg-[#00f0ff] disabled:bg-white/50 disabled:cursor-not-allowed transition-all duration-300 flex items-center justify-center gap-2 group/btn relative overflow-hidden"
                     >
                         <span className="relative z-10 flex items-center gap-2">
-                            {isSubmitting ? 'TRANSMITTING...' : isSent ? 'TRANSMISSION_COMPLETE' : 'INITIATE_TRANSMISSION'}
-                            {!isSubmitting && !isSent && <Send size={14} className="group-hover/btn:translate-x-1 transition-transform" />}
+                            {state.submitting ? 'TRANSMITTING...' : 'INITIATE_TRANSMISSION'}
+                            {!state.submitting && <Send size={14} className="group-hover/btn:translate-x-1 transition-transform" />}
                         </span>
-                        {isSubmitting && (
+                        {state.submitting && (
                             <div className="absolute inset-0 bg-[#00f0ff]/20 animate-pulse" />
                         )}
                     </button>

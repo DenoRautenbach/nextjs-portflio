@@ -12,14 +12,14 @@ export const projectsData: Project[] = [
         id: 1,
         title: "Ecommerce",
         description: "A decentralized ecommerce platform with advanced product management and secure checkout.",
-        link: "https://github.com/Simp4Hitagi/Capstone-Mangako",
+        link: "https://mangako-deno-rautenbach.netlify.app/",
         image: ""
     },
     {
         id: 2,
         title: "Python Projects",
         description: "Collection of Python utilities and automation scripts for data processing and workflows.",
-        link: "https://github.com/Simp4Hitagi/Python-Projects",
+        link: "https://github.com/DenoRautenbach/Python-Projects",
         image: ""
     },
     {

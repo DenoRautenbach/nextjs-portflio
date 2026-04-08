@@ -7,13 +7,17 @@ import SkewText from './SkewText';
 
 const navLinks = [
     { name: 'HOME', href: '#hero', sectionIndex: 0 },
-    { name: 'ABOUT', href: '#about', sectionIndex: 1 },
-    { name: 'PROJECTS', href: '#projects', sectionIndex: 2 },
-    { name: 'TESTIMONIALS', href: '#testimonials', sectionIndex: 4 },
-    { name: 'CONTACT', href: '#contact', sectionIndex: 3 },
+    { name: 'PROJECTS', href: '#projects', sectionIndex: 1 },
+    { name: 'ABOUT', href: '#about', sectionIndex: 2 },
+    { name: 'TESTIMONIALS', href: '#testimonials', sectionIndex: 3 },
+    { name: 'CONTACT', href: '#contact', sectionIndex: 4 },
 ];
 
-export default function SiteHeader() {
+interface SiteHeaderProps {
+    onNavLinkClick?: (index: number) => void;
+}
+
+export default function SiteHeader({ onNavLinkClick }: SiteHeaderProps) {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [scrolled, setScrolled] = useState(false);
 
@@ -38,7 +42,10 @@ export default function SiteHeader() {
 
                     {/* Logo */}
                     <div className="flex items-center gap-2 font-mono text-sm tracking-widest text-white mix-blend-difference z-[110] relative">
-                        <Image src="/logo.svg" alt="DR Logo" width={20} height={20} className="object-contain" />
+                        {/* <Image src="/logo.svg" alt="DR Logo" width={20} height={20} className="object-contain" /> */}
+                        <SkewText className="text-[30px] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/0 select-none">
+                            DR
+                        </SkewText>
                     </div>
 
                     {/* Desktop Navigation */}
@@ -47,6 +54,12 @@ export default function SiteHeader() {
                             <a
                                 key={link.name}
                                 href={link.href}
+                                onClick={(e) => {
+                                    if (onNavLinkClick) {
+                                        e.preventDefault();
+                                        onNavLinkClick(link.sectionIndex);
+                                    }
+                                }}
                                 className="font-mono text-xs font-bold text-white/70 hover:text-[#00f0ff] tracking-wider transition-colors duration-300 relative group"
                             >
                                 {link.name}
@@ -57,10 +70,15 @@ export default function SiteHeader() {
 
                     {/* Right Side: CTA & Mobile Burger */}
                     <div className="flex items-center gap-4 z-[110] relative">
-                        <button className="hidden md:flex bg-white text-black px-5 py-2 font-bold font-mono text-[10px] hover:bg-[#00f0ff] transition-colors duration-300 items-center gap-2 group border border-transparent hover:border-[#00f0ff]/50">
-                            START PROJECT
+                        <a 
+                            href="https://drive.google.com/file/d/1n83D2cESFx-vWTbqv9AiRL_VVO85fibv/view?usp=drive_link"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="hidden md:flex bg-white text-black px-5 py-2 font-bold font-mono text-[10px] hover:bg-[#00f0ff] transition-colors duration-300 items-center gap-2 group border border-transparent hover:border-[#00f0ff]/50"
+                        >
+                            VIEW RESUME
                             <ArrowUpRight size={12} className="group-hover:-translate-y-0.5 group-hover:translate-x-0.5 transition-transform" />
-                        </button>
+                        </a>
 
                         <button
                             onClick={toggleMenu}
@@ -83,7 +101,13 @@ export default function SiteHeader() {
                         <a
                             key={link.name}
                             href={link.href}
-                            onClick={() => setIsMenuOpen(false)}
+                            onClick={(e) => {
+                                setIsMenuOpen(false);
+                                if (onNavLinkClick && window.innerWidth >= 768) {
+                                    e.preventDefault();
+                                    onNavLinkClick(link.sectionIndex);
+                                }
+                            }}
                             className="group relative overflow-hidden"
                             style={{ transitionDelay: `${index * 50}ms` }}
                         >
