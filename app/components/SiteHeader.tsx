@@ -41,12 +41,12 @@ export default function SiteHeader({ onNavLinkClick }: SiteHeaderProps) {
                 <div className="container mx-auto px-6 md:px-12 flex items-center justify-between">
 
                     {/* Logo */}
-                    <div className="flex items-center gap-2 font-mono text-sm tracking-widest text-white mix-blend-difference z-[110] relative">
+                    <a href="/" aria-label='homepage' className="flex items-center gap-2 font-mono text-sm tracking-widest text-white mix-blend-difference z-[110] relative">
                         {/* <Image src="/logo.svg" alt="DR Logo" width={20} height={20} className="object-contain" /> */}
                         <SkewText className="text-[30px] leading-[0.8] font-black tracking-tighter text-transparent bg-clip-text bg-gradient-to-b from-white to-white/0 select-none">
                             DR
                         </SkewText>
-                    </div>
+                    </a>
 
                     {/* Desktop Navigation */}
                     <nav className="hidden md:flex items-center gap-8">
@@ -70,7 +70,7 @@ export default function SiteHeader({ onNavLinkClick }: SiteHeaderProps) {
 
                     {/* Right Side: CTA & Mobile Burger */}
                     <div className="flex items-center gap-4 z-[110] relative">
-                        <a 
+                        <a
                             href="https://drive.google.com/file/d/1n83D2cESFx-vWTbqv9AiRL_VVO85fibv/view?usp=drive_link"
                             target="_blank"
                             rel="noopener noreferrer"
