@@ -1,0 +1,14 @@
+<svg width="64" height="64" viewBox="0 0 64 64" xmlns="http://www.w3.org/2000/svg">
+  <!-- Brutalist Shadow -->
+  <rect x="10" y="10" width="46" height="46" fill="black" />
+  
+  <!-- Main Box -->
+  <rect x="4" y="4" width="46" height="46" fill="white" stroke="black" stroke-width="4" />
+  
+  <!-- Red Pulse Circle -->
+  <circle cx="18" cy="27" r="5" fill="#FF3E3E" stroke="black" stroke-width="2" />
+  
+  <!-- Text -->
+  <text x="28" y="25" font-family="sans-serif" font-weight="900" font-size="18" fill="black">D</text>
+  <text x="28" y="43" font-family="sans-serif" font-weight="900" font-size="18" fill="black">R</text>
+</svg>
