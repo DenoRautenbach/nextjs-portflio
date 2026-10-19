@@ -50,24 +50,69 @@ const BrutalBadge = ({ children, color = "bg-white text-black border-black" }: a
   </span>
 );
 
-const Navbar = () => (
-  <nav className="fixed top-0 left-0 w-full z-[200] p-4 sm:p-6 pointer-events-none">
-    <div className="max-w-7xl mx-auto flex justify-between items-center pointer-events-auto">
-      <a href="/" aria-label="homepage" className="bg-white text-black border-[3px] border-black p-2 sm:p-3 brutal-shadow flex items-center gap-2">
-        <div className="w-4 h-4 bg-[#FF3E3E] border-2 border-black rounded-full animate-pulse" />
-        <span className="font-syne font-black text-lg sm:text-xl uppercase tracking-tighter leading-none">D<br />R</span>
-      </a>
-      <div className="hidden md:flex gap-4">
-        {['Home', 'Projects', 'About', 'Testimonials', 'Contact'].map((item) => (
-          <a key={item} href={item === 'Home' ? '#' : `#${item.toLowerCase()}`} className="bg-white text-black border-[3px] border-black px-6 py-2 font-bold uppercase brutal-shadow brutal-shadow-hover hover:bg-[#FF3E3E] hover:text-white transition-colors">
-            {item}
-          </a>
-        ))}
+const NAV_ITEMS = ['Home', 'Projects', 'About', 'Testimonials', 'Contact'];
+const navHref = (item: string) => item === 'Home' ? '#' : `#${item.toLowerCase()}`;
+
+const Navbar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    if (!menuOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setMenuOpen(false); };
+    const onResize = () => { if (window.innerWidth >= 1024) setMenuOpen(false); };
+    window.addEventListener('keydown', onKey);
+    window.addEventListener('resize', onResize);
+    return () => {
+      window.removeEventListener('keydown', onKey);
+      window.removeEventListener('resize', onResize);
+    };
+  }, [menuOpen]);
+
+  return (
+    <nav className="fixed top-0 left-0 w-full z-[200] p-4 sm:p-6 pointer-events-none">
+      {menuOpen && (
+        <div className="fixed inset-0 bg-black/40 pointer-events-auto lg:hidden" onClick={() => setMenuOpen(false)} aria-hidden="true" />
+      )}
+      <div className="relative max-w-7xl mx-auto flex justify-between items-center pointer-events-auto">
+        <a href="/" aria-label="homepage" className="bg-white text-black border-[3px] border-black p-2 sm:p-3 brutal-shadow flex items-center gap-2">
+          <div className="w-4 h-4 bg-[#FF3E3E] border-2 border-black rounded-full animate-pulse" />
+          <span className="font-syne font-black text-lg sm:text-xl uppercase tracking-tighter leading-none">D<br />R</span>
+        </a>
+        <div className="hidden lg:flex gap-4">
+          {NAV_ITEMS.map((item) => (
+            <a key={item} href={navHref(item)} className="bg-white text-black border-[3px] border-black px-6 py-2 font-bold uppercase brutal-shadow brutal-shadow-hover hover:bg-[#FF3E3E] hover:text-white transition-colors">
+              {item}
+            </a>
+          ))}
+        </div>
+        <BrutalButton
+          className="lg:hidden"
+          variant={menuOpen ? "secondary" : "primary"}
+          onClick={() => setMenuOpen(open => !open)}
+          aria-expanded={menuOpen}
+          aria-controls="mobile-menu"
+        >
+          {menuOpen ? 'Close' : 'Menu'}
+        </BrutalButton>
+
+        {menuOpen && (
+          <div id="mobile-menu" className="lg:hidden absolute top-full right-0 mt-4 w-full sm:w-72 bg-white text-black border-[3px] border-black brutal-shadow-lg flex flex-col">
+            {NAV_ITEMS.map((item, i) => (
+              <a
+                key={item}
+                href={navHref(item)}
+                onClick={() => setMenuOpen(false)}
+                className={`font-syne font-black text-xl sm:text-2xl uppercase tracking-tighter px-5 sm:px-6 py-4 hover:bg-[#FF3E3E] hover:text-white transition-colors ${i > 0 ? 'border-t-[3px] border-black' : ''}`}
+              >
+                {item}
+              </a>
+            ))}
+          </div>
+        )}
       </div>
-      <BrutalButton className="md:hidden" variant="primary">Menu</BrutalButton>
-    </div>
-  </nav>
-);
+    </nav>
+  );
+};
 
 export default function Home() {
   const [loading, setLoading] = useState(true);
@@ -120,30 +165,33 @@ export default function Home() {
       end: "bottom bottom",
     });
 
-    // 3. Project Reveals
-    projectsRef.current.forEach((el, index) => {
-      if (!el) return;
-      gsap.fromTo(el,
-        {
-          y: 250,
-          scale: 0.7,
-          rotation: index % 2 === 0 ? -15 : 15,
-          filter: "grayscale(100%) contrast(300%) blur(15px)"
-        },
-        {
-          y: 0,
-          scale: 1,
-          rotation: 0,
-          filter: "grayscale(0%) contrast(100%) blur(0px)",
-          duration: 1.5,
-          ease: "elastic.out(1, 0.4)",
-          scrollTrigger: {
-            trigger: el,
-            start: "top 85%",
-            toggleActions: "play none none reverse"
+    // 3. Project Reveals (medium screens and up only)
+    const mm = gsap.matchMedia();
+    mm.add("(min-width: 768px)", () => {
+      projectsRef.current.forEach((el, index) => {
+        if (!el) return;
+        gsap.fromTo(el,
+          {
+            y: 250,
+            scale: 0.7,
+            rotation: index % 2 === 0 ? -15 : 15,
+            filter: "grayscale(100%) contrast(300%) blur(15px)"
+          },
+          {
+            y: 0,
+            scale: 1,
+            rotation: 0,
+            filter: "grayscale(0%) contrast(100%) blur(0px)",
+            duration: 1.5,
+            ease: "elastic.out(1, 0.4)",
+            scrollTrigger: {
+              trigger: el,
+              start: "top 85%",
+              toggleActions: "play none none reverse"
+            }
           }
-        }
-      );
+        );
+      });
     });
 
     // 4. Color Inversion
@@ -175,6 +223,7 @@ export default function Home() {
     });
 
     return () => {
+      mm.revert();
       ScrollTrigger.getAll().forEach(t => t.kill());
     };
   }, [loading]);
@@ -187,25 +236,25 @@ export default function Home() {
 
       <main className={loading ? "opacity-0" : "opacity-100 transition-opacity duration-100"}>
         <section className="min-h-screen pt-32 pb-20 px-4 sm:px-6 relative flex flex-col justify-center items-center overflow-hidden">
-          <div className="absolute top-40 left-10 w-32 h-32 bg-[var(--brutal-white)] border-[3px] border-[var(--brutal-black)] rounded-full mix-blend-difference blur-sm opacity-50 animate-pulse" />
-          <div className="absolute bottom-40 right-10 w-48 h-48 bg-[#FF3E3E] border-[3px] border-[var(--brutal-black)] mix-blend-multiply blur-sm opacity-50" />
+          <div className="absolute top-28 left-4 w-20 h-20 md:top-40 md:left-10 md:w-32 md:h-32 bg-[var(--brutal-white)] border-[3px] border-[var(--brutal-black)] rounded-full mix-blend-difference blur-sm opacity-50 animate-pulse" />
+          <div className="absolute bottom-20 right-4 w-28 h-28 md:bottom-40 md:right-10 md:w-48 md:h-48 bg-[#FF3E3E] border-[3px] border-[var(--brutal-black)] mix-blend-multiply blur-sm opacity-50" />
 
           <div className="max-w-9xl mx-auto w-full relative z-10">
-            <div className="flex flex-col md:flex-row gap-8 items-end justify-between mb-12">
-              <div className="flex-1">
+            <div className="flex flex-col lg:flex-row gap-8 md:gap-12 lg:gap-8 items-start lg:items-end justify-between mb-12">
+              <div className="@container flex-1 min-w-0 w-full lg:w-auto">
                 <BrutalBadge color="bg-[#FF3E3E] text-white border-black">Let's Collab</BrutalBadge>
                 <div className="overflow-hidden mt-6 pb-2">
-                  <h1 ref={heroTextRef1} className="font-syne font-black text-[15vw] md:text-[8vw] leading-[0.85] tracking-tighter uppercase text-[var(--text-color)] will-change-transform translate-y-[100%]">
+                  <h1 ref={heroTextRef1} className="font-syne font-black text-[9cqw] leading-[0.85] whitespace-nowrap tracking-tighter uppercase text-[var(--text-color)] will-change-transform translate-y-[100%]">
                     D.R<br />
                   </h1>
                 </div>
-                <div className="overflow-hidden px-12 pt-12 pb-16 -mx-12 -mt-12 -mb-12">
-                  <span ref={heroTextRef2} className="text-white text-shadow-brutal bg-[#FF3E3E] px-4 inline-block border-[4px] border-black font-syne font-black text-[15vw] md:text-[8vw] leading-[0.85] tracking-tighter uppercase will-change-transform translate-y-[100%]">
+                <div className="overflow-hidden px-4 pt-6 pb-10 -mx-4 -mt-6 -mb-6 md:px-12 md:pt-12 md:pb-16 md:-mx-12 md:-mt-12 md:-mb-12">
+                  <span ref={heroTextRef2} className="text-white text-shadow-brutal bg-[#FF3E3E] px-2 sm:px-4 inline-block border-[3px] sm:border-[4px] border-black font-syne font-black text-[9cqw] leading-[0.85] whitespace-nowrap tracking-tighter uppercase will-change-transform translate-y-[100%]">
                     Developer
                   </span>
                 </div>
               </div>
-              <div className="w-full md:w-1/3 bg-[var(--brutal-white)] text-[var(--brutal-black)] border-[3px] border-[var(--brutal-black)] p-6 brutal-shadow-lg relative">
+              <div className="w-full md:max-w-lg lg:max-w-none lg:w-80 xl:w-96 shrink-0 bg-[var(--brutal-white)] text-[var(--brutal-black)] border-[3px] border-[var(--brutal-black)] p-6 brutal-shadow-lg relative">
                 <div className="absolute -top-4 -right-4 bg-black text-white border-[3px] border-black p-2 transform rotate-12">
                   <Star className="fill-white" size={24} />
                 </div>
@@ -231,10 +280,10 @@ export default function Home() {
           </div>
         </div>
 
-        <section id="projects" className="py-24 relative bg-[var(--bg-color)]">
+        <section id="projects" className="py-24 relative overflow-x-clip bg-[var(--bg-color)]">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-            <div className="flex justify-between items-end mb-20 border-b-[4px] border-[var(--text-color)] pb-6">
-              <h2 className="font-syne font-black text-6xl md:text-8xl uppercase tracking-tighter text-[var(--text-color)]">Selected<br />Works</h2>
+            <div className="flex justify-between items-end mb-12 md:mb-20 border-b-[4px] border-[var(--text-color)] pb-6">
+              <h2 className="font-syne font-black text-[10vw] sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] uppercase tracking-tighter text-[var(--text-color)]">Selected<br />Works</h2>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
@@ -252,7 +301,7 @@ export default function Home() {
                       {project.icon}
                     </div>
                   </div>
-                  <h3 className="font-syne font-black text-3xl sm:text-4xl mb-4 uppercase text-inherit break-words hyphens-auto">{project.title}</h3>
+                  <h3 className="font-syne font-black text-2xl sm:text-3xl md:text-4xl mb-4 uppercase text-inherit break-words hyphens-auto">{project.title}</h3>
                   <p className="mb-8 flex-grow text-inherit font-bold opacity-90 text-lg break-words">{project.description}</p>
                   <div className="flex flex-wrap gap-3 mb-10">
                     {project.tech.map(t => (
@@ -278,20 +327,20 @@ export default function Home() {
 
         <section id="about" className="py-32 relative bg-[var(--bg-color)] z-20">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 relative z-10">
-            <div className="flex justify-between items-end mb-20 border-b-[4px] border-[var(--text-color)] pb-6">
-              <h2 className="font-syne font-black text-6xl md:text-8xl uppercase tracking-tighter text-[var(--text-color)]">About<br />Me</h2>
+            <div className="flex justify-between items-end mb-12 md:mb-20 border-b-[4px] border-[var(--text-color)] pb-6">
+              <h2 className="font-syne font-black text-[10vw] sm:text-6xl md:text-7xl lg:text-8xl leading-[0.9] uppercase tracking-tighter text-[var(--text-color)]">About<br />Me</h2>
             </div>
 
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
               <div className="flex flex-col gap-16">
                 <div>
-                  <h3 className="font-syne font-black text-4xl mb-6 uppercase text-[var(--text-color)] border-l-8 border-[#FF3E3E] pl-6">Full Stack Expertise</h3>
+                  <h3 className="font-syne font-black text-2xl sm:text-3xl md:text-4xl mb-6 uppercase text-[var(--text-color)] border-l-4 sm:border-l-8 border-[#FF3E3E] pl-4 sm:pl-6 break-words">Full Stack Expertise</h3>
                   <p className="text-2xl font-bold text-[var(--text-color)] opacity-90 leading-relaxed break-words">
                     I specialize in Full Stack Development. This includes Front-End as well as Backend.
                   </p>
                 </div>
                 <div>
-                  <h3 className="font-syne font-black text-4xl mb-6 uppercase text-[var(--text-color)] border-l-8 border-[#FF3E3E] pl-6">Passion & Pursuit</h3>
+                  <h3 className="font-syne font-black text-2xl sm:text-3xl md:text-4xl mb-6 uppercase text-[var(--text-color)] border-l-4 sm:border-l-8 border-[#FF3E3E] pl-4 sm:pl-6 break-words">Passion & Pursuit</h3>
                   <p className="text-2xl font-bold text-[var(--text-color)] opacity-90 leading-relaxed break-words">
                     In my free time you'll find me in front of a computer screen learning something new. Be it a Language, Programming language, Mathematics, Philosophy, Mythology or even Classical Literature. My favorite pass time is learning something new! Even so, I still enjoy sports and any outdoor activity just to be closer to nature.
                   </p>
@@ -299,7 +348,7 @@ export default function Home() {
               </div>
 
               <div>
-                <h3 className="font-syne font-black text-4xl mb-8 uppercase text-[var(--text-color)] border-l-8 border-[#FF3E3E] pl-6">Core Stack</h3>
+                <h3 className="font-syne font-black text-2xl sm:text-3xl md:text-4xl mb-8 uppercase text-[var(--text-color)] border-l-4 sm:border-l-8 border-[#FF3E3E] pl-4 sm:pl-6 break-words">Core Stack</h3>
                 <div className="flex flex-wrap gap-4">
                   {['React', 'Next.js', 'TypeScript', 'WebGL', 'Three.js', 'Node.js'].map(tech => (
                     <span key={tech} className="bg-[var(--bg-color)] text-[var(--text-color)] border-[4px] border-[var(--text-color)] px-6 py-4 font-black uppercase text-2xl shadow-[8px_8px_0px_0px_var(--text-color)] transform transition-transform hover:-translate-y-2 hover:-translate-x-2 hover:bg-[#FF3E3E] hover:text-white hover:border-[#000] hover:shadow-[16px_16px_0px_0px_var(--text-color)] break-words">
@@ -312,36 +361,36 @@ export default function Home() {
           </div>
         </section>
 
-        <section id="testimonials" ref={stackContainerRef} className="relative pt-32 pb-48 px-4 sm:px-6 bg-[var(--bg-color)] z-30">
+        <section id="testimonials" ref={stackContainerRef} className="relative overflow-x-clip pt-20 md:pt-32 pb-32 md:pb-48 px-4 sm:px-6 bg-[var(--bg-color)] z-30">
           <div className="max-w-7xl mx-auto relative z-10">
-            <h2 className="font-syne font-black text-6xl md:text-[4vw] uppercase tracking-tighter text-[var(--text-color)] mb-20 text-center drop-shadow-md">
+            <h2 className="font-syne font-black text-[6.5vw] sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl uppercase tracking-tighter text-[var(--text-color)] mb-12 md:mb-20 text-center drop-shadow-md">
               Testimonials
             </h2>
 
             <div className="relative flex flex-col gap-16 pb-32">
-              <div ref={stackCard1Ref} className={`sticky top-[10vh] w-full border-[4px] border-black p-8 md:p-12 shadow-[16px_16px_0px_0px_#FF3E3E] z-10 ${TESTIMONIALS[0].color} will-change-transform`}>
+              <div ref={stackCard1Ref} className={`sticky top-[10vh] w-full border-[4px] border-black p-6 sm:p-8 md:p-12 shadow-[8px_8px_0px_0px_#FF3E3E] md:shadow-[16px_16px_0px_0px_#FF3E3E] z-10 ${TESTIMONIALS[0].color} will-change-transform`}>
                 <Quote className="mb-6 opacity-50" size={64} />
-                <p className="text-2xl md:text-4xl font-medium mb-10 font-syne uppercase leading-tight break-words">"{TESTIMONIALS[0].text}"</p>
+                <p className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-8 md:mb-10 font-syne uppercase leading-tight break-words">"{TESTIMONIALS[0].text}"</p>
                 <div>
-                  <h4 className="font-black text-2xl md:text-3xl uppercase tracking-tight break-words">{TESTIMONIALS[0].name}</h4>
+                  <h4 className="font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-tight break-words">{TESTIMONIALS[0].name}</h4>
                   <p className="text-lg font-bold opacity-75 break-words">{TESTIMONIALS[0].role}</p>
                 </div>
               </div>
 
-              <div ref={stackCard2Ref} className={`sticky top-[15vh] w-full border-[4px] border-black p-8 md:p-12 shadow-[16px_16px_0px_0px_#000] z-20 ${TESTIMONIALS[1].color} will-change-transform`}>
+              <div ref={stackCard2Ref} className={`sticky top-[15vh] w-full border-[4px] border-black p-6 sm:p-8 md:p-12 shadow-[8px_8px_0px_0px_#000] md:shadow-[16px_16px_0px_0px_#000] z-20 ${TESTIMONIALS[1].color} will-change-transform`}>
                 <Quote className="mb-6 opacity-50" size={64} />
-                <p className="text-2xl md:text-4xl font-medium mb-10 font-syne uppercase leading-tight break-words">"{TESTIMONIALS[1].text}"</p>
+                <p className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-8 md:mb-10 font-syne uppercase leading-tight break-words">"{TESTIMONIALS[1].text}"</p>
                 <div>
-                  <h4 className="font-black text-2xl md:text-3xl uppercase tracking-tight break-words">{TESTIMONIALS[1].name}</h4>
+                  <h4 className="font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-tight break-words">{TESTIMONIALS[1].name}</h4>
                   <p className="text-lg font-bold opacity-75 break-words">{TESTIMONIALS[1].role}</p>
                 </div>
               </div>
 
-              <div ref={stackCard3Ref} className={`sticky top-[20vh] w-full border-[4px] border-black p-8 md:p-12 shadow-[16px_16px_0px_0px_#000] z-30 ${TESTIMONIALS[2].color} will-change-transform`}>
+              <div ref={stackCard3Ref} className={`sticky top-[20vh] w-full border-[4px] border-black p-6 sm:p-8 md:p-12 shadow-[8px_8px_0px_0px_#000] md:shadow-[16px_16px_0px_0px_#000] z-30 ${TESTIMONIALS[2].color} will-change-transform`}>
                 <Quote className="mb-6 opacity-50" size={64} />
-                <p className="text-2xl md:text-4xl font-medium mb-10 font-syne uppercase leading-tight break-words">"{TESTIMONIALS[2].text}"</p>
+                <p className="text-lg sm:text-2xl md:text-3xl lg:text-4xl font-medium mb-8 md:mb-10 font-syne uppercase leading-tight break-words">"{TESTIMONIALS[2].text}"</p>
                 <div>
-                  <h4 className="font-black text-2xl md:text-3xl uppercase tracking-tight break-words">{TESTIMONIALS[2].name}</h4>
+                  <h4 className="font-black text-xl sm:text-2xl md:text-3xl uppercase tracking-tight break-words">{TESTIMONIALS[2].name}</h4>
                   <p className="text-lg font-bold opacity-75 break-words">{TESTIMONIALS[2].role}</p>
                 </div>
               </div>
@@ -350,9 +399,9 @@ export default function Home() {
         </section>
 
         <section id="contact" className="py-32 bg-[var(--bg-color)] border-t-[4px] border-[var(--text-color)] relative z-40">
-          <div className="max-w-7xl mx-auto px-4 sm:px-0 flex flex-col md:flex-row gap-16">
-            <div className="flex-1">
-              <h2 className="font-syne font-black text-7xl md:text-9xl uppercase tracking-tighter mb-8 leading-none text-[var(--text-color)] break-words">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 flex flex-col md:flex-row gap-12 lg:gap-16">
+            <div className="flex-1 min-w-0">
+              <h2 className="font-syne font-black text-[16vw] sm:text-7xl md:text-8xl lg:text-9xl uppercase tracking-tighter mb-8 leading-none text-[var(--text-color)] break-words">
                 Let's<br />Talk<br />
               </h2>
               <div className="flex gap-6 mt-12">
@@ -364,19 +413,19 @@ export default function Home() {
                 </BrutalButton>
               </div>
             </div>
-            <div className="flex-1">
-              <form action="https://formspree.io/f/xbdpbdwn" method="POST" className="bg-white text-black border-[4px] border-black p-10 brutal-shadow-lg flex flex-col gap-8 min-w-0">
+            <div className="flex-1 min-w-0">
+              <form action="https://formspree.io/f/xbdpbdwn" method="POST" className="bg-white text-black border-[4px] border-black p-6 sm:p-8 lg:p-10 brutal-shadow-lg flex flex-col gap-6 sm:gap-8 min-w-0">
                 <div className="flex flex-col gap-3">
                   <label className="font-bold uppercase text-sm">Name</label>
-                  <input type="text" name="name" className="border-[3px] border-black p-5 bg-transparent focus:outline-none focus:border-[#FF3E3E] focus:translate-x-2 transition-all" placeholder="Name" required />
+                  <input type="text" name="name" className="w-full min-w-0 border-[3px] border-black p-4 sm:p-5 bg-transparent focus:outline-none focus:border-[#FF3E3E] focus:translate-x-2 transition-all" placeholder="Name" required />
                 </div>
                 <div className="flex flex-col gap-3">
                   <label className="font-bold uppercase text-sm">Email</label>
-                  <input type="email" name="email" className="border-[3px] border-black p-5 bg-transparent focus:outline-none focus:border-[#FF3E3E] focus:translate-x-2 transition-all" placeholder="Email" required />
+                  <input type="email" name="email" className="w-full min-w-0 border-[3px] border-black p-4 sm:p-5 bg-transparent focus:outline-none focus:border-[#FF3E3E] focus:translate-x-2 transition-all" placeholder="Email" required />
                 </div>
                 <div className="flex flex-col gap-3">
                   <label className="font-bold uppercase text-sm">Message</label>
-                  <textarea name="message" rows={5} className="border-[3px] border-black p-5 bg-transparent focus:outline-none focus:border-[#FF3E3E] focus:translate-x-2 transition-all resize-none" placeholder="Message" required></textarea>
+                  <textarea name="message" rows={5} className="w-full min-w-0 border-[3px] border-black p-4 sm:p-5 bg-transparent focus:outline-none focus:border-[#FF3E3E] focus:translate-x-2 transition-all resize-none" placeholder="Message" required></textarea>
                 </div>
                 <BrutalButton type="submit" variant="primary" className="w-full mt-6 py-6 text-xl sm:text-2xl group hover:scale-105">
                   Send <ArrowRight className="group-hover:translate-x-4 transition-transform" size={32} />
